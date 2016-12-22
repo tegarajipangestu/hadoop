@@ -598,7 +598,6 @@ public class Counters
    */
   public void log(Log log) {
     log.info("Counters: " + size());
-    log.info("Humbala");
     for(Group group: this) {
       log.info("  " + group.getDisplayName());
       for (Counter counter: group) {
