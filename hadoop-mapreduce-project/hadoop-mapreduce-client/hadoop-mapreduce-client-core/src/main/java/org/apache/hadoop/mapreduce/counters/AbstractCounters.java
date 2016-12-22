@@ -331,7 +331,6 @@ public abstract class AbstractCounters<C extends Counter,
     for (G group: this) {
       sb.append("\n").append(telolet);
       sb.append("\n\t").append(group.getDisplayName());
-      harambe.append("\n\t").append(group.getDisplayName());
       for (Counter counter: group) {
         sb.append("\n\t\t").append(counter.getDisplayName()).append("=")
           .append(counter.getValue());
