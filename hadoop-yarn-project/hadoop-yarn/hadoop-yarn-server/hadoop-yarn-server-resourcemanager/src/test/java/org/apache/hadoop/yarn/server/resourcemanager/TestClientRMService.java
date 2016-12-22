@@ -892,8 +892,7 @@ public class TestClientRMService {
     final CyclicBarrier startBarrier = new CyclicBarrier(2);
     final CyclicBarrier endBarrier = new CyclicBarrier(2);
 
-    @SuppressWarnings("rawtypes")
-    EventHandler eventHandler = new EventHandler() {
+    EventHandler<Event> eventHandler = new EventHandler<Event>() {
       @Override
       public void handle(Event rawEvent) {
         if (rawEvent instanceof RMAppEvent) {
@@ -980,7 +979,8 @@ public class TestClientRMService {
       throws IOException {
     Dispatcher dispatcher = mock(Dispatcher.class);
     when(rmContext.getDispatcher()).thenReturn(dispatcher);
-    EventHandler eventHandler = mock(EventHandler.class);
+    @SuppressWarnings("unchecked")
+    EventHandler<Event> eventHandler = mock(EventHandler.class);
     when(dispatcher.getEventHandler()).thenReturn(eventHandler);
     QueueInfo queInfo = recordFactory.newRecordInstance(QueueInfo.class);
     queInfo.setQueueName("testqueue");
@@ -1534,7 +1534,7 @@ public class TestClientRMService {
     // Get node labels collection
     GetClusterNodeLabelsResponse response = client
         .getClusterNodeLabels(GetClusterNodeLabelsRequest.newInstance());
-    Assert.assertTrue(response.getNodeLabels().containsAll(
+    Assert.assertTrue(response.getNodeLabelList().containsAll(
         Arrays.asList(labelX, labelY)));
 
     // Get node labels mapping
@@ -1605,7 +1605,7 @@ public class TestClientRMService {
     // Get node labels collection
     GetClusterNodeLabelsResponse response = client
         .getClusterNodeLabels(GetClusterNodeLabelsRequest.newInstance());
-    Assert.assertTrue(response.getNodeLabels().containsAll(
+    Assert.assertTrue(response.getNodeLabelList().containsAll(
         Arrays.asList(labelX, labelY, labelZ)));
 
     // Get labels to nodes mapping
