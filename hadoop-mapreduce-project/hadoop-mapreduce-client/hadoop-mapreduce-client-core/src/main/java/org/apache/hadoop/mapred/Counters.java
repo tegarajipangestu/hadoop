@@ -61,16 +61,16 @@ import com.google.common.collect.Iterators;
 @InterfaceStability.Stable
 public class Counters
     extends AbstractCounters<Counters.Counter, Counters.Group> {
-  
+
   public static final int MAX_COUNTER_LIMIT = Limits.getCountersMax();
   public static final int MAX_GROUP_LIMIT = Limits.getGroupsMax();
   private static final HashMap<String, String> depricatedCounterMap =
       new HashMap<String, String>();
-  
+
   static {
     initDepricatedMap();
   }
-  
+
   public Counters() {
     super(groupFactory);
   }
@@ -99,7 +99,7 @@ public class Counters
     }
     return null;
   }
-  
+
   /**
    * Downgrade new {@link org.apache.hadoop.mapreduce.Counters} to old Counters
    * @param newCounters new Counters
@@ -137,7 +137,7 @@ public class Counters
     }
     return builder.toString();
   }
-  
+
   /**
    * A counter record, comprising its name and value.
    */
@@ -226,7 +226,7 @@ public class Counters
     public org.apache.hadoop.mapreduce.Counter getUnderlyingCounter() {
       return realCounter;
     }
-    
+
     @Override
     public synchronized boolean equals(Object genericRight) {
       if (genericRight instanceof Counter) {
@@ -239,7 +239,7 @@ public class Counters
       }
       return false;
     }
-    
+
     @Override
     public int hashCode() {
       return realCounter.hashCode();
@@ -258,23 +258,23 @@ public class Counters
   @InterfaceStability.Stable
   public static class Group implements CounterGroupBase<Counter> {
     private CounterGroupBase<Counter> realGroup;
-    
+
     protected Group() {
       realGroup = null;
     }
-    
+
     Group(GenericGroup group) {
       this.realGroup = group;
     }
     Group(FSGroupImpl group) {
       this.realGroup = group;
     }
-    
+
     @SuppressWarnings({ "unchecked", "rawtypes" })
     Group(FrameworkGroupImpl group) {
       this.realGroup = group;
     }
-    
+
     /**
      * @param counterName the name of the counter
      * @return the value of the specified counter, or 0 if the counter does
@@ -316,7 +316,7 @@ public class Counters
 
     @Override
     public void write(DataOutput out) throws IOException {
-     realGroup.write(out); 
+     realGroup.write(out);
     }
 
     @Override
@@ -378,7 +378,7 @@ public class Counters
     public void incrAllCounters(CounterGroupBase<Counter> rightGroup) {
       realGroup.incrAllCounters(rightGroup);
     }
-    
+
     @Override
     public CounterGroupBase<Counter> getUnderlyingGroup() {
       return realGroup;
@@ -388,7 +388,7 @@ public class Counters
     public synchronized boolean equals(Object genericRight) {
       if (genericRight instanceof CounterGroupBase<?>) {
         @SuppressWarnings("unchecked")
-        CounterGroupBase<Counter> right = ((CounterGroupBase<Counter>) 
+        CounterGroupBase<Counter> right = ((CounterGroupBase<Counter>)
         genericRight).getUnderlyingGroup();
         return Iterators.elementsEqual(iterator(), right.iterator());
       }
@@ -425,7 +425,7 @@ public class Counters
     protected Counter newCounter() {
       return new Counter();
     }
-    
+
     @Override
     public CounterGroupBase<Counter> getUnderlyingGroup() {
      return this;
@@ -598,6 +598,7 @@ public class Counters
    */
   public void log(Log log) {
     log.info("Counters: " + size());
+    log.info("Humbala");
     for(Group group: this) {
       log.info("  " + group.getDisplayName());
       for (Counter counter: group) {
